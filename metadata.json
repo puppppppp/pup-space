@@ -1,0 +1,6 @@
+{
+  "name": "SVI Digital Visitor Hub",
+  "description": "A premium corporate visitor hub for SVI, enabling dynamic client visits, custom agendas, and interactive factory tour timelines with zero-code administration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
