@@ -1,0 +1,967 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!--page-->
+<title>Pupae Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Kadesiree (Pupae) Panyadee: digital marketing, SEO and graphic design work, 2020–2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Allura&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap">
+<style>
+/* Layout: a desktop "file manager" window. Sidebar = navigation, main pane = folders you open, inspector = file properties. */
+:root{
+  --bg:#E9F0FA;          /* page behind the window, soft sky */
+  --glow:#BFD8F7;        /* blue haze around the window */
+  --win:#FBFCFE;         /* window surface */
+  --pane:#F3F5F9;        /* sidebar, wells */
+  --line:#E3E7EE;
+  --ink:#16181D;
+  --muted:#757B88;
+  --faint:#A3A9B5;
+  --folder:#5DB6F4;      /* the folder blue from the original deck */
+  --folder-2:#3E95E8;
+  --folder-ink:#FFFFFF;
+  --glass:rgba(255,255,255,.72);
+  --glass-2:rgba(240,243,248,.9);
+  --paper:#FFFFFF;
+  --red:#E5484D; --red-bg:#FDECEC;
+  --blue-bg:#E7F2FD;
+  --gray-bg:#F1F2F5;
+  --shadow:0 1px 2px rgba(22,40,80,.06),0 12px 40px -12px rgba(22,40,80,.18);
+
+  --f-display:"Outfit",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-script:"Allura","Snell Roundhand","Segoe Script",cursive;
+  --f-mono:"DM Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --r-win:22px; --r-card:18px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0C1017; --glow:#173052; --win:#141922; --pane:#10141B; --line:#232A36;
+    --ink:#EEF1F6; --muted:#98A0AE; --faint:#6A7281;
+    --glass:rgba(40,47,60,.72); --glass-2:rgba(32,38,50,.92); --paper:#2A3140;
+    --red-bg:#3A1C1F; --blue-bg:#16283F; --gray-bg:#1E242F;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 18px 50px -14px rgba(0,0,0,.6);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0C1017; --glow:#173052; --win:#141922; --pane:#10141B; --line:#232A36;
+  --ink:#EEF1F6; --muted:#98A0AE; --faint:#6A7281;
+  --glass:rgba(40,47,60,.72); --glass-2:rgba(32,38,50,.92); --paper:#2A3140;
+  --red-bg:#3A1C1F; --blue-bg:#16283F; --gray-bg:#1E242F;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 18px 50px -14px rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font:400 15px/1.6 var(--f-display);
+  background-image:radial-gradient(60% 50% at 0% 100%,var(--glow),transparent 70%),radial-gradient(50% 45% at 100% 100%,var(--glow),transparent 70%);
+  background-attachment:fixed;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:20px 40px;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--folder-2);outline-offset:3px;border-radius:6px}
+h1,h2,h3{margin:0;text-wrap:balance;font-weight:600}
+p{margin:0}
+.mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.04em}
+.muted{color:var(--muted)}
+
+/* ---------- window shell ---------- */
+.window{
+  max-width:1360px;margin:0 auto;background:var(--win);border-radius:var(--r-win);
+  box-shadow:var(--shadow);border:1px solid var(--line);
+  display:grid;grid-template-columns:232px minmax(0,1fr);
+}
+.sidebar{
+  border-right:1px solid var(--line);padding:22px 16px;
+  position:sticky;top:env(safe-area-inset-top,0px);align-self:start;height:calc(100vh - 40px);
+  display:flex;flex-direction:column;gap:6px;
+}
+.side-top{display:flex;align-items:center;justify-content:space-between;padding:0 6px 14px}
+.dots{display:flex;gap:7px}
+.dots i{width:11px;height:11px;border-radius:50%;background:#FF5F57}
+.dots i:nth-child(2){background:#FEBC2E}.dots i:nth-child(3){background:#28C840}
+.theme-btn{border:1px solid var(--line);background:var(--win);border-radius:8px;width:30px;height:30px;display:grid;place-items:center;cursor:pointer;color:var(--muted)}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav a{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:9px;text-decoration:none;color:var(--muted);font-size:14px}
+.nav a:hover{background:var(--pane);color:var(--ink)}
+.nav a.on{background:var(--pane);color:var(--ink);font-weight:500;box-shadow:inset 0 0 0 1px var(--line)}
+.nav svg{width:17px;height:17px;flex:none}
+.nav .sub{margin-left:18px;padding-left:12px;border-left:1px solid var(--line);display:flex;flex-direction:column;gap:2px}
+.nav .sub a{font-size:13px;padding:5px 10px}
+.side-bottom{margin-top:auto;display:flex;flex-direction:column;gap:12px}
+.avail{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);padding:0 10px}
+.avail::before{content:"";width:8px;height:8px;border-radius:50%;background:#28C840;box-shadow:0 0 0 3px rgba(40,200,64,.18)}
+.me{display:flex;align-items:center;gap:10px;border-top:1px solid var(--line);padding:14px 6px 0}
+.me-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--folder),var(--folder-2));color:#fff;display:grid;place-items:center;font-weight:600;font-size:13px;flex:none}
+.me b{display:block;font-size:13px;font-weight:600}
+.me span{display:block;font-size:11.5px;color:var(--muted);overflow-wrap:anywhere}
+
+.main{min-width:0}
+.toolbar{
+  display:flex;align-items:center;gap:12px;padding:14px 28px;border-bottom:1px solid var(--line);
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--win) 88%,transparent);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:0 var(--r-win) 0 0;
+}
+.crumbs{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);min-width:0;flex-wrap:wrap}
+.crumbs b{color:var(--ink);font-weight:500}
+.toolbar .grow{flex:1}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--win);border-radius:10px;padding:8px 14px;font-size:13px;text-decoration:none;cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--pane)}
+.btn.dark{background:var(--ink);color:var(--win);border-color:var(--ink)}
+.btn.dark:hover{opacity:.88}
+.btn svg{width:15px;height:15px}
+.menu-btn{display:none}
+
+section{padding:56px 40px;border-bottom:1px solid var(--line);scroll-margin-top:60px}
+section:last-child{border-bottom:0}
+.eyebrow{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:28px;flex-wrap:wrap}
+.script{font-family:var(--f-script);font-weight:400;line-height:.9;letter-spacing:0}
+.h-script{font-size:clamp(64px,8vw,104px)}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 12px;font-size:12px;background:var(--gray-bg);color:var(--muted);white-space:nowrap}
+
+/* ---------- folder primitive ---------- */
+.fold{position:relative;aspect-ratio:1.32/1;--c1:var(--folder);--c2:var(--folder-2)}
+.fold .tab{position:absolute;left:0;top:0;width:42%;height:22%;background:var(--c2);border-radius:14% 18% 0 0 / 40% 40% 0 0}
+.fold .tab::after{content:"";position:absolute;right:-14%;bottom:0;width:30%;height:60%;background:var(--c2);clip-path:polygon(0 0,40% 100%,0 100%)}
+.fold .back{position:absolute;left:0;right:0;top:12%;bottom:0;background:var(--c2);border-radius:9%/11%}
+.fold .paper{position:absolute;left:7%;right:7%;top:16%;bottom:14%;background:var(--paper);border-radius:7px;box-shadow:0 2px 8px rgba(0,0,0,.08);overflow:hidden}
+.fold .front{
+  position:absolute;left:0;right:0;top:34%;bottom:0;border-radius:9%/14%;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--c1) 82%,white) 0%,var(--c1) 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 -2px 10px rgba(0,0,0,.05);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+}
+
+/* ---------- hero ---------- */
+.hero{padding-top:44px;padding-bottom:0;overflow:hidden}
+.hero-top{display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--faint)}
+.hero-title{text-align:center;margin-top:28px}
+.hero-title .script{display:block;font-size:clamp(44px,6vw,70px);margin-bottom:-.12em;color:var(--ink)}
+.hero-title h1{font-size:clamp(68px,13vw,168px);font-weight:400;letter-spacing:-.045em;line-height:.95}
+.hero-title p{margin-top:16px;font-size:clamp(15px,1.6vw,18px);color:var(--muted)}
+.stack{position:relative;width:min(100%,880px);aspect-ratio:880/360;margin:36px auto 0}
+.stack .fold{position:absolute;bottom:-4%;transform-origin:50% 100%;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.stack .fold .front span{position:absolute;right:10%;top:12%;font-size:clamp(14px,2.4vw,28px);font-weight:600;color:rgba(255,255,255,.55);letter-spacing:-.02em}
+.stack .f1{left:2%;width:27%;--c1:#FF7A45;--c2:#F2552C;transform:rotate(-16deg)}
+.stack .f1 .front{background:radial-gradient(60% 70% at 30% 40%,#FFB36B,transparent),radial-gradient(50% 60% at 75% 70%,#FF4D6D,transparent),#FF6A3D}
+.stack .f2{left:16%;width:27%;--c1:#FFD86A;--c2:#F7C23A;transform:rotate(-7deg)}
+.stack .f4{left:57%;width:28%;--c1:#C9C0B8;--c2:#AFA399;transform:rotate(5deg)}
+.stack .f5{left:69%;width:28%;--c1:#7CCBFF;--c2:#44A9F2;transform:rotate(13deg)}
+.stack .f3{left:33%;width:34%;--c1:#5458E8;--c2:#3B3FD0;z-index:2}
+.stack .f3 .front{background:linear-gradient(180deg,rgba(110,114,245,.88),rgba(66,70,222,.96))}
+.stack .f3 .front span{left:0;right:0;text-align:center;top:30%;font-size:clamp(20px,4vw,46px);color:rgba(255,255,255,.4)}
+.stack .lines{position:absolute;inset:14% 10% auto;display:flex;flex-direction:column;gap:12px}
+.stack .lines i{display:block;height:1px;background:var(--line)}
+.card-up{
+  position:absolute;left:40%;width:22%;bottom:44%;z-index:1;background:var(--paper);border-radius:14px;
+  padding:clamp(10px,1.6vw,18px);box-shadow:0 10px 30px -8px rgba(30,40,90,.3);transform:rotate(9deg);
+  transition:transform .5s cubic-bezier(.2,.8,.2,1);
+}
+.card-up b{display:block;font-weight:700;font-size:clamp(9px,1.3vw,15px);letter-spacing:.04em;margin-bottom:8px}
+.card-up a{display:block;font-size:clamp(8px,1vw,12px);color:var(--muted);text-decoration:none;padding:5px 0;border-bottom:1px solid var(--line)}
+.card-up a:hover{color:var(--folder-2)}
+.stack:hover .f1{transform:rotate(-19deg) translateY(-4px)}
+.stack:hover .f5{transform:rotate(16deg) translateY(-4px)}
+.stack:hover .card-up{transform:rotate(6deg) translateY(-14px)}
+.shelf{height:22px;background:var(--pane);border-top:1px solid var(--line);margin:0 -40px}
+.hero-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 0 18px}
+.hero-foot a{text-decoration:none}
+
+/* ---------- stats strip ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding:28px 40px;border-bottom:1px solid var(--line)}
+.stat{background:var(--pane);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.stat small{display:block;font-size:12px;color:var(--muted)}
+.stat strong{display:block;font-size:26px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin:2px 0 8px}
+.bar{height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:inherit;background:var(--folder)}
+.bar.red i{background:var(--red)}
+
+/* ---------- about ---------- */
+.about{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:48px;align-items:start}
+.hello{display:flex;flex-direction:column;gap:22px}
+.hello .h-script{font-size:clamp(90px,12vw,150px)}
+.dock{display:flex;flex-wrap:wrap;gap:6px;padding:8px;border-radius:16px;background:var(--glass-2);border:1px solid var(--line);width:fit-content;max-width:100%}
+.dock span{font-family:var(--f-mono);font-size:11px;padding:6px 9px;border-radius:9px;background:var(--win);border:1px solid var(--line)}
+.desk{position:relative;margin-bottom:84px;border:1px dashed var(--line);border-radius:var(--r-card);padding:22px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;background:var(--pane)}
+.desk-item{display:flex;flex-direction:column;align-items:center;gap:8px;text-decoration:none;font-size:12.5px;color:var(--muted);text-align:center;background:none;border:0;padding:0;cursor:pointer}
+.desk-item .fold{width:72px}
+.desk-item:hover .fold{transform:translateY(-3px)}
+.desk-item .fold{transition:transform .2s}
+.ctx{position:absolute;right:-10px;bottom:-96px;z-index:2;background:var(--win);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:6px;font-size:12px;min-width:140px}
+.ctx div{padding:4px 10px;border-radius:6px;color:var(--muted)}
+.ctx div.hi{background:var(--blue-bg);color:var(--folder-2)}
+.select{display:inline-block;position:relative;background:color-mix(in srgb,var(--folder) 30%,transparent);padding:0 .12em;font-size:clamp(40px,5vw,60px);font-weight:500;letter-spacing:-.03em;line-height:1.1}
+.select::before,.select::after{content:"";position:absolute;width:3px;background:var(--folder-2);top:-.1em;bottom:-.1em}
+.select::before{left:-3px}.select::after{right:-3px}
+.select i{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--folder-2)}
+.select i:first-child{left:-7.5px;top:-.25em}.select i:last-child{right:-7.5px;bottom:-.25em}
+.bio{margin-top:22px;display:flex;flex-direction:column;gap:12px;max-width:62ch;color:var(--muted);font-size:16px}
+.bio strong{color:var(--ink);font-weight:500}
+.mini-h{font-size:13px;font-weight:600;margin:30px 0 12px;letter-spacing:.02em}
+.edu{display:flex;flex-direction:column;gap:14px}
+.edu-row{display:grid;grid-template-columns:52px minmax(0,1fr);gap:14px;align-items:center}
+.edu-row .fold{width:52px}
+.edu-row b{display:block;font-weight:500}
+.edu-row span{font-size:13.5px;color:var(--muted)}
+.bubbles{display:flex;flex-wrap:wrap;gap:12px}
+.bubble{background:var(--folder-2);color:#fff;padding:7px 16px;border-radius:16px 16px 16px 4px;font-size:13.5px}
+.bubble:nth-child(2){border-radius:16px 16px 4px 16px;background:var(--folder)}
+.bubble em{font-style:normal;opacity:.8}
+
+/* ---------- work (file manager) ---------- */
+.work{display:grid;grid-template-columns:minmax(0,1fr) 280px;padding:0}
+.work-main{padding:48px 40px 56px;min-width:0}
+.work-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.work-head h2{font-size:30px;letter-spacing:-.02em}
+.work-tools{display:flex;gap:10px;flex-wrap:wrap}
+.search{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;padding:0 12px;background:var(--win);min-width:0}
+.search svg{width:15px;height:15px;color:var(--faint);flex:none}
+.search input{border:0;outline:0;background:none;font:inherit;font-size:13px;padding:9px 0;width:180px;max-width:100%;color:var(--ink)}
+.folders{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.pf{background:none;border:0;padding:0;cursor:pointer;text-align:left}
+.pf .fold{--c1:var(--glass);--c2:color-mix(in srgb,var(--faint) 28%,var(--pane));aspect-ratio:1/1;transition:transform .25s}
+.pf .fold .front{background:linear-gradient(180deg,var(--glass) 0%,var(--glass-2) 100%);border:1px solid color-mix(in srgb,var(--line) 70%,transparent);padding:9% 10% 9%;display:flex;flex-direction:column;justify-content:flex-end;color:var(--ink);top:46%}
+.pf .paper{top:16%;bottom:40%;transform:rotate(-2deg)}
+.pf .paper+.paper{transform:rotate(3deg);left:16%;right:4%;top:20%}
+.pf .paper img{width:100%;height:100%;object-fit:cover}
+.pf h3{font-size:clamp(13px,1.25vw,16px);font-weight:600;line-height:1.2}
+.pf .count{font-size:12.5px;color:var(--muted);margin-top:3px}
+.pf .yr{font-size:11px;color:var(--faint);margin-top:6px;font-family:var(--f-mono)}
+.pf:hover .fold{transform:translateY(-4px)}
+.pf[aria-pressed="true"] .fold{--c2:color-mix(in srgb,var(--folder) 55%,white)}
+.pf[aria-pressed="true"] .fold .front{background:linear-gradient(180deg,rgba(124,190,250,.86),rgba(70,150,240,.95));color:#fff;border-color:transparent}
+.pf[aria-pressed="true"] .count,.pf[aria-pressed="true"] .yr{color:rgba(255,255,255,.85)}
+
+.gallery-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:40px 0 16px;flex-wrap:wrap}
+.gallery-head h3{font-size:20px;letter-spacing:-.01em}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+.item{background:var(--win);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:zoom-in;text-align:left;padding:0;display:flex;flex-direction:column}
+.item:hover{border-color:var(--folder)}
+.item .thumb{aspect-ratio:4/3;background:var(--pane);overflow:hidden}
+.item .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.item.contain .thumb img{object-fit:contain;padding:8px}
+.item:hover .thumb img{transform:scale(1.04)}
+.item .meta{padding:12px 14px 14px;display:flex;flex-direction:column;gap:4px}
+.item .meta b{font-weight:500;font-size:14px}
+.item .meta span{font-size:12.5px;color:var(--muted)}
+.item.wide{grid-column:span 2}
+.item.wide .thumb{aspect-ratio:16/7}
+.empty{grid-column:1/-1;padding:40px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:14px}
+
+.inspector{border-left:1px solid var(--line);padding:48px 22px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.ins-card{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--win)}
+.ins-card small{font-size:12px;color:var(--muted)}
+.ins-card strong{display:block;font-size:24px;font-weight:600;letter-spacing:-.02em;margin:2px 0 10px;font-variant-numeric:tabular-nums}
+.props h4{font-size:14px;margin:12px 0 10px;font-weight:600}
+.props dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:9px 12px;font-size:12.5px}
+.props dt{color:var(--muted)}
+.props dd{margin:0;text-align:right;font-weight:500}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:11.5px;padding:3px 9px;border-radius:7px;border:1px solid var(--line);color:var(--muted)}
+.tag::before{content:"• "}
+.tag.b{background:var(--blue-bg);color:var(--folder-2);border-color:transparent}
+.tag.r{background:var(--red-bg);color:var(--red);border-color:transparent}
+.ins-foot{margin-top:auto;display:flex;flex-direction:column;gap:10px;font-size:13px;color:var(--muted)}
+.ins-foot a{text-decoration:none;display:flex;align-items:center;gap:8px}
+.ins-foot a:hover{color:var(--ink)}
+.ins-foot svg{width:15px;height:15px}
+
+/* ---------- site cards (live pages) ---------- */
+.browser{height:100%;display:flex;flex-direction:column;background:var(--win)}
+.browser .bar-top{display:flex;align-items:center;gap:6px;padding:8px 10px;border-bottom:1px solid var(--line);background:var(--pane)}
+.browser .bar-top i{width:7px;height:7px;border-radius:50%;background:var(--line);flex:none}
+.browser .bar-top span{margin-left:6px;flex:1;min-width:0;font-family:var(--f-mono);font-size:10.5px;color:var(--muted);background:var(--win);border:1px solid var(--line);border-radius:6px;padding:2px 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.browser .pg{flex:1;padding:14px;display:flex;flex-direction:column;gap:8px;background:linear-gradient(160deg,var(--blue-bg),var(--win) 70%)}
+.browser .pg b{font-size:15px;font-weight:600;line-height:1.3}
+.browser .pg em{font-style:normal;font-size:12px;color:var(--muted)}
+.browser .sk{height:7px;border-radius:4px;background:var(--line)}
+.item.link{cursor:pointer;text-decoration:none;color:inherit}
+.item .go{font-size:12px;color:var(--folder-2);font-weight:500}
+
+/* ---------- seo ---------- */
+.seo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.step{border:1px solid var(--line);border-radius:var(--r-card);padding:18px;display:flex;flex-direction:column;gap:8px;background:var(--win)}
+.step .n{font-family:var(--f-mono);font-size:12px;color:var(--folder-2)}
+.step h3{font-size:16px}
+.step p{font-size:14px;color:var(--muted)}
+.serp{margin-top:26px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+.serp-card{border:1px solid var(--line);border-radius:var(--r-card);padding:16px 18px;min-width:0}
+.serp-card .lbl{display:inline-block;margin-bottom:10px}
+.serp-card .u{font-size:12px;color:var(--muted);overflow-wrap:anywhere}
+.serp-card .t{font-size:17px;color:#1A5DCC;margin:2px 0 4px;line-height:1.35}
+.serp-card .d{font-size:13px;color:var(--muted)}
+.serp-card.after{border-color:var(--folder)}
+
+/* ---------- performance ---------- */
+.perf-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.perf-tabs button{border:1px solid var(--line);background:var(--win);border-radius:999px;padding:7px 14px;font-size:13px;cursor:pointer}
+.perf-tabs button[aria-selected="true"]{background:var(--ink);color:var(--win);border-color:var(--ink)}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kpi{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--win)}
+.kpi small{display:block;font-size:12px;color:var(--muted)}
+.kpi strong{display:block;font-size:26px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:2px}
+.kpi .dl{font-size:12px;font-weight:600;color:#1F9D55}
+.kpi .dl.neg{color:var(--red)}
+.kpi.wait strong{color:var(--faint)}
+.kpi.wait .dl{color:var(--faint);font-weight:400}
+.chart-box{margin-top:14px;border:1px solid var(--line);border-radius:var(--r-card);padding:16px 18px;background:var(--win)}
+.chart-box h3{font-size:14px;margin-bottom:10px}
+.chart-box svg{width:100%;height:auto;display:block}
+.chart-box svg text{fill:var(--muted);font:11px var(--f-display)}
+.chart-empty{border:1px dashed var(--line);border-radius:12px;padding:34px 16px;text-align:center;color:var(--muted);font-size:14px}
+.perf-note{margin-top:14px;font-size:13px;color:var(--muted)}
+.perf-note b{color:var(--ink);font-weight:500}
+
+/* ---------- experience ---------- */
+.list{border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden}
+.row{display:grid;grid-template-columns:44px minmax(0,1.5fr) minmax(0,1fr) 150px;gap:16px;align-items:start;padding:18px 20px;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row.head{background:var(--pane);font-size:12px;color:var(--muted);padding-block:10px;align-items:center}
+.row .fold{width:40px;margin-top:3px}
+.row h3{font-size:16px;font-weight:600}
+.row .co{font-size:13.5px;color:var(--muted);margin-top:2px}
+.row ul{margin:10px 0 0;padding-left:18px;color:var(--muted);font-size:14px;display:flex;flex-direction:column;gap:4px}
+.row .when{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.metric{display:inline-block;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--blue-bg);color:var(--folder-2)}
+.metric.r{background:var(--red-bg);color:var(--red)}
+.minor{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:22px}
+.minor div{border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:13.5px;color:var(--muted)}
+.minor b{display:block;color:var(--ink);font-weight:500;font-size:14.5px}
+
+/* ---------- skills ---------- */
+.skills{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:40px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--win);border-radius:999px;padding:8px 14px;font-size:13.5px}
+.awards{display:flex;flex-direction:column;gap:10px}
+.award{display:grid;grid-template-columns:58px minmax(0,1fr);gap:12px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.award .y{font-family:var(--f-mono);font-size:13px;color:var(--folder-2)}
+.award b{display:block;font-weight:500;font-size:14px}
+.award span{font-size:12.5px;color:var(--muted)}
+
+/* ---------- contact ---------- */
+.contact{text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px}
+.contact .h-script{font-size:clamp(72px,10vw,120px)}
+.mail{display:inline-flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;background:var(--folder-2);color:#fff;border-radius:999px;padding:10px 10px 10px 22px;font-size:clamp(14px,2vw,18px);max-width:100%}
+.mail span{overflow-wrap:anywhere;user-select:all}
+.mail button{border:0;background:rgba(255,255,255,.2);color:#fff;border-radius:999px;padding:8px 16px;cursor:pointer;font-size:13px}
+.mail button:hover{background:rgba(255,255,255,.3)}
+.contact .row-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+footer{display:flex;justify-content:space-between;gap:12px;padding:18px 40px;font-size:12px;color:var(--faint);flex-wrap:wrap;border-top:1px solid var(--line)}
+
+/* ---------- lightbox ---------- */
+.lb{position:fixed;inset:0;z-index:50;background:rgba(10,14,22,.82);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:max(20px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(20px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.lb figure{margin:0;max-width:min(1200px,100%);display:flex;flex-direction:column;gap:12px;align-items:center}
+.lb img{max-height:78vh;width:auto;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);background:#fff}
+.lb figcaption{color:#E8ECF2;text-align:center;font-size:14px;max-width:70ch}
+.lb figcaption b{display:block;font-weight:500;font-size:16px;color:#fff}
+.lb .x,.lb .nv{position:absolute;border:0;background:rgba(255,255,255,.14);color:#fff;width:44px;height:44px;border-radius:50%;cursor:pointer;font-size:20px;display:grid;place-items:center}
+.lb .x{top:max(16px,env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px))}
+.lb .nv.p{left:max(16px,env(safe-area-inset-left,0px))}.lb .nv.n{right:max(16px,env(safe-area-inset-right,0px))}
+.lb .x:hover,.lb .nv:hover{background:rgba(255,255,255,.26)}
+.toast{position:fixed;left:50%;bottom:max(24px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--win);padding:10px 18px;border-radius:999px;font-size:13px;z-index:60}
+
+/* ---------- responsive ---------- */
+@media (max-width:1180px){
+  .work{grid-template-columns:minmax(0,1fr)}
+  .inspector{border-left:0;border-top:1px solid var(--line);padding:28px 40px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .inspector .props,.ins-foot{grid-column:span 1}
+  .ins-foot{margin-top:0}
+  .folders{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:900px){
+  .seo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  body{padding-block:0 0;padding-left:0;padding-right:0}
+  .window{grid-template-columns:minmax(0,1fr);border-radius:0;border:0}
+  .sidebar{position:fixed;inset:0 auto 0 0;width:270px;height:auto;z-index:40;background:var(--win);transform:translateX(-102%);transition:transform .3s;box-shadow:var(--shadow);padding-top:calc(22px + env(safe-area-inset-top,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-bottom:max(22px,env(safe-area-inset-bottom,0px))}
+  .sidebar.open{transform:none}
+  .menu-btn{display:inline-flex}
+  .toolbar{border-radius:0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  section,.stats,.work-main,footer{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  section{padding-block:44px}
+  .shelf{margin:0 calc(-1 * max(16px,env(safe-area-inset-left,0px)))}
+  .inspector{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .about,.skills{grid-template-columns:minmax(0,1fr);gap:36px}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .row{grid-template-columns:40px minmax(0,1fr)}
+  .row.head{display:none}
+  .row .when,.row .mcol{grid-column:2}
+  .scrim{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:39}
+}
+@media (max-width:560px){
+  .seo-grid,.serp{grid-template-columns:minmax(0,1fr)}
+  .crumbs .hide-s,.toolbar .btn .hide-s{display:none}
+  .folders{gap:12px}
+  .desk{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ctx{display:none}
+  .inspector{grid-template-columns:minmax(0,1fr)}
+  .minor{grid-template-columns:minmax(0,1fr)}
+  .item.wide{grid-column:auto}
+  .item.wide .thumb{aspect-ratio:4/3}
+  .gallery{grid-template-columns:minmax(0,1fr)}
+  .search input{width:100%}
+  .hero-top .hide-s{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="window">
+  <!-- ===== sidebar ===== -->
+  <aside class="sidebar" id="sidebar" aria-label="Site navigation">
+    <div class="side-top">
+      <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch light or dark theme">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+    </div>
+    <nav class="nav" id="nav">
+      <a href="#home" data-s="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Home</a>
+      <a href="#about" data-s="about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>About me</a>
+      <a href="#work" data-s="work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5H9l2 2h8.5A1.5 1.5 0 0 1 21 8.5v10a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5z"/></svg>Projects</a>
+      <div class="sub" id="navSub"></div>
+      <a href="#seo" data-s="seo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M8 11h6M11 8v6"/></svg>SEO &amp; GEO</a>
+      <a href="#performance" data-s="performance"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg>Performance</a>
+      <a href="#experience" data-s="experience"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Experience</a>
+      <a href="#skills" data-s="skills"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg>Skills &amp; awards</a>
+      <a href="#contact" data-s="contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Contact</a>
+    </nav>
+    <div class="side-bottom">
+      <div class="avail">Open to new projects</div>
+      <div class="me">
+        <div class="me-av" aria-hidden="true">KP</div>
+        <div><b>Kadesiree Panyadee</b><span>panyadeekad@gmail.com</span></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ===== main ===== -->
+  <div class="main">
+    <header class="toolbar">
+      <button class="btn menu-btn" id="menuBtn" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <div class="crumbs"><span class="hide-s">Pupae</span><span class="hide-s">›</span><b id="crumb">Home</b></div>
+      <div class="grow"></div>
+      <a class="btn" href="assets/Kadesiree_Panyadee_CV.pdf" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14"/></svg><span class="hide-s">CV</span>
+      </a>
+      <a class="btn dark" href="#contact">Contact me</a>
+    </header>
+
+    <!-- hero -->
+    <section class="hero" id="home" data-name="Home">
+      <div class="hero-top mono"><span>Designer · Pupae</span><span class="pill hide-s">2020 – 2026 WORK COLLECTION</span><span>Bangkok, TH</span></div>
+      <div class="hero-title">
+        <span class="script">welcome to my</span>
+        <h1>Portfolio</h1>
+        <p>Digital marketing, SEO &amp; graphic design by Kadesiree Panyadee</p>
+      </div>
+      <div class="stack" aria-label="Project folders">
+        <div class="fold f1" aria-hidden="true"><div class="tab"></div><div class="back"></div><div class="front"><span>2020</span></div></div>
+        <div class="fold f2" aria-hidden="true"><div class="tab"></div><div class="back"></div><div class="paper"><div class="lines"><i></i><i></i><i></i><i></i></div></div><div class="front"><span>2022</span></div></div>
+        <div class="fold f4" aria-hidden="true"><div class="tab"></div><div class="back"></div><div class="paper"></div><div class="front"><span>2024</span></div></div>
+        <div class="fold f5" aria-hidden="true"><div class="tab"></div><div class="back"></div><div class="front"><span>2025</span></div></div>
+        <div class="card-up">
+          <b>PART PROJECTS</b>
+          <a href="#work" data-open="social">Social media</a>
+          <a href="#work" data-open="web">Website &amp; banners</a>
+          <a href="#work" data-open="logo">Logo &amp; packaging</a>
+          <a href="#work" data-open="poster">Poster &amp; backdrop</a>
+        </div>
+        <div class="fold f3" aria-hidden="true"><div class="tab"></div><div class="back"></div><div class="front"><span>2026</span></div></div>
+      </div>
+      <div class="shelf" aria-hidden="true"></div>
+      <div class="hero-foot mono">
+        <a href="#about">• Index</a>
+        <span class="pill hide-s">Graphic design &amp; marketing consult</span>
+        <b>#00</b>
+      </div>
+    </section>
+
+    <!-- stats -->
+    <div class="stats" aria-label="Results">
+      <div class="stat"><small>Organic CTR · LEARN Corp.</small><strong>+30%</strong><div class="bar"><i style="width:30%"></i></div></div>
+      <div class="stat"><small>Organic traffic · ZUBBBiotech</small><strong>+33%</strong><div class="bar"><i style="width:33%"></i></div></div>
+      <div class="stat"><small>Brand followers managed · SVI</small><strong>18.5k</strong><div class="bar"><i style="width:62%"></i></div></div>
+      <div class="stat"><small>Running my own store since</small><strong>2020</strong><div class="bar red"><i style="width:86%"></i></div></div>
+    </div>
+
+    <!-- about -->
+    <section id="about" data-name="About me">
+      <div class="about">
+        <div class="hello">
+          <span class="script h-script">Hello!</span>
+          <div class="dock" aria-label="Tools I use">
+            <span>Illustrator</span><span>Photoshop</span><span>Canva</span><span>CapCut</span><span>GA4</span><span>Search Console</span><span>HubSpot</span><span>WordPress</span><span>Magento</span><span>Ahrefs</span><span>Similarweb</span>
+          </div>
+          <div class="desk">
+            <a class="desk-item" href="assets/Kadesiree_Panyadee_CV.pdf" target="_blank" rel="noopener">
+              <div class="fold"><div class="tab"></div><div class="back"></div><div class="paper"></div><div class="front"></div></div>CV resume</a>
+            <a class="desk-item" href="#work"><div class="fold"><div class="tab"></div><div class="back"></div><div class="paper"></div><div class="front"></div></div>Projects</a>
+            <a class="desk-item" href="#experience"><div class="fold"><div class="tab"></div><div class="back"></div><div class="paper"></div><div class="front"></div></div>Experience</a>
+            <button class="desk-item" type="button" data-copy><div class="fold"><div class="tab"></div><div class="back"></div><div class="paper"></div><div class="front"></div></div>Copy email</button>
+            <div class="ctx" aria-hidden="true"><div>Cut</div><div>Copy</div><div class="hi">Paste</div><div>Delete</div></div>
+          </div>
+        </div>
+        <div>
+          <h2 class="select"><i></i>about me<i></i></h2>
+          <div class="bio">
+            <p>I'm <strong>Kadesiree Panyadee</strong>, also known as <strong>Pupae</strong>. I'm a digital marketer and graphic designer based in Bangkok, Thailand.</p>
+            <p>I grow organic traffic, engagement and leads for EdTech, manufacturing and biotech brands, working across SEO, AI-search optimization (GEO), content strategy, social media and analytics. On the design side, I make the posts, banners, logos and packaging that carry that work.</p>
+            <p>I learn fast and like working in a team. I pick up ideas from everyday life and turn data into clear priorities for content, product and leadership.</p>
+          </div>
+          <h3 class="mini-h">Education</h3>
+          <div class="edu">
+            <div class="edu-row"><div class="fold"><div class="tab"></div><div class="back"></div><div class="paper"></div><div class="front"></div></div>
+              <div><b>MSc in Marketing Management</b><span>Thammasat University · Jan 2023 – May 2024 · GPA 3.70</span></div></div>
+            <div class="edu-row"><div class="fold"><div class="tab"></div><div class="back"></div><div class="paper"></div><div class="front"></div></div>
+              <div><b>BBA, First Class Honours · Integrative Business Management</b><span>Thammasat University · 2019 – 2022 · GPA 3.56</span></div></div>
+          </div>
+          <h3 class="mini-h">Languages</h3>
+          <div class="bubbles">
+            <span class="bubble">Thai <em>· Native</em></span>
+            <span class="bubble">English <em>· Professional working</em></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- work -->
+    <section class="work" id="work" data-name="Projects">
+      <div class="work-main">
+        <div class="work-head">
+          <div>
+            <p class="mono muted">PROJECTS / <span id="folderPath">ALL</span></p>
+            <h2>Selected work</h2>
+          </div>
+          <div class="work-tools">
+            <label class="search" for="q">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <input id="q" type="search" placeholder="Search projects" autocomplete="off">
+            </label>
+            <button class="btn" id="showAll" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg>Show all
+            </button>
+          </div>
+        </div>
+        <div class="folders" id="folders"></div>
+        <div class="gallery-head">
+          <h3 id="galleryTitle">All projects</h3>
+          <span class="pill" id="galleryCount"></span>
+        </div>
+        <div class="gallery" id="gallery"></div>
+      </div>
+      <aside class="inspector" aria-label="Folder details">
+        <div class="ins-card"><small>Pieces in this folder</small><strong id="insCount">0</strong><div class="bar"><i id="insBar" style="width:0"></i></div></div>
+        <div class="ins-card"><small>Brands &amp; clients</small><strong id="insClients">0</strong><div class="bar red"><i id="insBar2" style="width:0"></i></div></div>
+        <div class="props">
+          <h4>Properties</h4>
+          <dl>
+            <dt>Folder</dt><dd id="pName">All</dd>
+            <dt>Years</dt><dd id="pYears">2020 – 2026</dd>
+            <dt>Role</dt><dd id="pRole">Design &amp; marketing</dd>
+          </dl>
+          <h4>Tags</h4>
+          <div class="tags" id="pTags"></div>
+        </div>
+        <div class="ins-foot">
+          <a href="#experience"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5M9 3h6l-1 6 4 4H6l4-4z"/></svg>Experience behind the work</a>
+          <a href="#contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Start a project</a>
+        </div>
+      </aside>
+    </section>
+
+    <!-- seo -->
+    <section id="seo" data-name="SEO & GEO">
+      <div class="eyebrow"><span class="script h-script">SEO &amp; GEO</span><span class="pill">Google + AI search</span></div>
+      <p class="bio" style="margin:0 0 26px">I plan content around what students, parents and buyers actually search for, then make each page easy for Google and for AI answer engines (ChatGPT, Gemini, AI Overviews) to read, quote and click.</p>
+      <div class="seo-grid">
+        <div class="step"><span class="n">STEP 1</span><h3>Keyword &amp; intent research</h3><p>Cluster keywords by search intent with Ahrefs and Search Console, and map each cluster to one page so pages don't compete.</p></div>
+        <div class="step"><span class="n">STEP 2</span><h3>Topic clusters</h3><p>Build pillar pages and supporting articles, such as OnDemand's medical-school exam guide and tutor directory, linked together.</p></div>
+        <div class="step"><span class="n">STEP 3</span><h3>On-page &amp; snippets</h3><p>Rewrite titles, meta descriptions, headings and internal links around the searcher's question to lift click-through rate.</p></div>
+        <div class="step"><span class="n">STEP 4</span><h3>GEO: AI-search readiness</h3><p>Structured, fact-dense sections, FAQs and clear entities so AI engines can cite the page as a source.</p></div>
+        <div class="step"><span class="n">STEP 5</span><h3>Technical &amp; international</h3><p>Schema, page structure and localized sites, including SVI's Chinese-language website launch.</p></div>
+        <div class="step"><span class="n">STEP 6</span><h3>Measure &amp; report</h3><p>Rankings, CTR, engagement and organic conversions from GSC and GA4, reported monthly to management.</p></div>
+      </div>
+      <div class="serp">
+        <div class="serp-card after"><span class="pill lbl" style="background:var(--blue-bg);color:var(--folder-2)">Live search title</span><p class="u">ondemand.in.th › med-journey</p><p class="t">เตรียมสอบหมอ DEK71 ต้องสอบอะไรบ้าง? สรุป TPAT1 และ A-Level</p><p class="d">OnDemand Med Journey guide</p></div>
+        <div class="serp-card"><span class="pill lbl">Why it gets the click</span>
+          <ul style="margin:0;padding-left:18px;color:var(--muted);font-size:13.5px;display:flex;flex-direction:column;gap:6px">
+            <li><b style="color:var(--ink);font-weight:500">เตรียมสอบหมอ</b> leads with the main query students type.</li>
+            <li><b style="color:var(--ink);font-weight:500">DEK71</b> names the student cohort, so the page reads as current.</li>
+            <li><b style="color:var(--ink);font-weight:500">ต้องสอบอะไรบ้าง?</b> is phrased as the question, which suits AI answers.</li>
+            <li><b style="color:var(--ink);font-weight:500">TPAT1, A-Level</b> covers the exam-name searches too.</li>
+          </ul></div>
+      </div>
+    </section>
+
+    <!-- performance -->
+    <section id="performance" data-name="Performance">
+      <div class="eyebrow"><span class="script h-script">Performance</span><span class="pill" id="perfPeriod"></span></div>
+      <div class="perf-tabs" role="tablist" id="perfTabs"></div>
+      <div class="kpis" id="perfKpis"></div>
+      <div class="chart-box"><h3 id="perfChartTitle">Monthly organic clicks</h3><div id="perfChart"></div></div>
+      <p class="perf-note" id="perfNote"></p>
+    </section>
+
+    <!-- experience -->
+    <section id="experience" data-name="Experience">
+      <div class="eyebrow"><span class="script h-script">Experience</span><span class="pill">4 roles · 2020 – now</span></div>
+      <div class="list">
+        <div class="row head"><span></span><span>Role</span><span>Highlights</span><span>Dates</span></div>
+        <div class="row">
+          <div class="fold"><div class="tab"></div><div class="back"></div><div class="paper"></div><div class="front"></div></div>
+          <div><h3>Online Experience Specialist (Senior Officer)</h3><p class="co">LEARN Corporation · OnDemand Education · Bangkok</p>
+            <ul><li>Rebuilt titles, meta descriptions and snippets around student and parent intent.</li><li>Own SEO and digital discovery for OnDemand's platforms and learning portals.</li><li>Plan topic clusters for Google and AI-driven search (GEO); report from GSC and GA4.</li></ul></div>
+          <div class="mcol"><span class="metric">+30% organic CTR in 3 months</span></div>
+          <span class="when">Aug 2026 – Present</span>
+        </div>
+        <div class="row">
+          <div class="fold"><div class="tab"></div><div class="back"></div><div class="paper"></div><div class="front"></div></div>
+          <div><h3>Digital Marketing Specialist &amp; Business Development</h3><p class="co">SVI Public Company Limited · Pathum Thani</p>
+            <ul><li>Led digital marketing for the Chinese-language market expansion: localized website and Chinese social media.</li><li>Keyword research and topic clusters for search and AI discoverability.</li><li>LinkedIn content and exhibition graphics (HKTDC Hong Kong).</li></ul></div>
+          <div class="mcol"><span class="metric">New market launch</span></div>
+          <span class="when">Nov 2025 – Jul 2026</span>
+        </div>
+        <div class="row">
+          <div class="fold"><div class="tab"></div><div class="back"></div><div class="paper"></div><div class="front"></div></div>
+          <div><h3>Business Development</h3><p class="co">ZUBBBiotech Co., Ltd. · Bangkok</p>
+            <ul><li>SEO and content strategy: keyword research, optimization, structured content.</li><li>Social content plans and SEO blog frameworks; expert-led articles on biotech ingredients.</li><li>Worked with leadership to turn business goals into a marketing roadmap.</li></ul></div>
+          <div class="mcol"><span class="metric">+33% organic traffic</span></div>
+          <span class="when">Jan 2025 – Nov 2025</span>
+        </div>
+        <div class="row">
+          <div class="fold" style="--c1:#FF7A45;--c2:#F2552C"><div class="tab"></div><div class="back"></div><div class="paper"></div><div class="front"></div></div>
+          <div><h3>Founder</h3><p class="co">Wallah_Studio &amp; Wallah.home</p>
+            <ul><li>Run an online accessories and home décor store end to end: e-commerce, social media, branding and operations.</li></ul></div>
+          <div class="mcol"><span class="metric r">Own brand</span></div>
+          <span class="when">2020 – Present</span>
+        </div>
+      </div>
+      <div class="minor">
+        <div><b>Business Intelligence Intern · Lazada Thailand</b>May 2023. Analyzed user behavior for retention and acquisition opportunities.</div>
+        <div><b>Commercial Intern, Lazprentice · Lazada Thailand</b>May 2022. Helped launch an O2O seller program with the Motor team.</div>
+        <div><b>Supply Chain Planning Intern (E2E) · Unilever Thailand</b>Aug 2022, 4 months. Monitored daily Home Care stock.</div>
+        <div><b>Event design · Thammasat &amp; IBMP</b>Backdrops, roll-ups and posters for EFMD 2025 and IBMP Drama 2020.</div>
+      </div>
+    </section>
+
+    <!-- skills -->
+    <section id="skills" data-name="Skills & awards">
+      <div class="skills">
+        <div>
+          <div class="eyebrow"><span class="script h-script">Skills</span></div>
+          <div class="chips">
+            <span class="chip">SEO strategy: on-page, technical, international</span>
+            <span class="chip">Generative Engine Optimization (GEO)</span>
+            <span class="chip">Content strategy &amp; topic clusters</span>
+            <span class="chip">Social media content planning</span>
+            <span class="chip">Landing page &amp; conversion optimization</span>
+            <span class="chip">GA4 &amp; Search Console analytics</span>
+            <span class="chip">HubSpot CRM &amp; lead tracking</span>
+            <span class="chip">WordPress &amp; Magento</span>
+            <span class="chip">Brand identity &amp; logo design</span>
+            <span class="chip">Packaging design</span>
+            <span class="chip">Event backdrops &amp; print</span>
+            <span class="chip">Stakeholder management</span>
+          </div>
+        </div>
+        <div>
+          <div class="eyebrow"><span class="script h-script">Awards</span></div>
+          <div class="awards">
+            <div class="award"><span class="y">2021</span><div><b>First Runner-up</b><span>CABB Business Plan Pitching Challenge</span></div></div>
+            <div class="award"><span class="y">2021</span><div><b>Finalist</b><span>AIESEC Social Case Competition, Nestlé track</span></div></div>
+            <div class="award"><span class="y">2022</span><div><b>Finalist</b><span>DOTs: Digital Opportunities for Talents, SME digital marketing plan</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- contact -->
+    <section id="contact" class="contact" data-name="Contact">
+      <span class="script h-script">Let's work together</span>
+      <p class="muted" style="max-width:52ch">Need SEO, social content or a brand look that holds together? Send me a note. I reply within two working days.</p>
+      <div class="mail"><span>panyadeekad@gmail.com</span><button type="button" data-copy>Copy</button></div>
+      <div class="row-btns">
+        <a class="btn" href="mailto:panyadeekad@gmail.com">Write an email</a>
+        <a class="btn" href="assets/Kadesiree_Panyadee_CV.pdf" target="_blank" rel="noopener">Open CV (PDF)</a>
+      </div>
+      <p class="mono muted">Bangkok, Thailand · GMT+7</p>
+    </section>
+
+    <footer><span>© 2026 Kadesiree Panyadee (Pupae)</span><span>2020 – 2026 work collection</span></footer>
+  </div>
+</div>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Project preview">
+  <button class="x" type="button" data-lb="close" aria-label="Close">✕</button>
+  <button class="nv p" type="button" data-lb="prev" aria-label="Previous">‹</button>
+  <figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
+  <button class="nv n" type="button" data-lb="next" aria-label="Next">›</button>
+</div>
+<div class="toast" id="toast" hidden></div>
+<div class="scrim" id="scrim" hidden></div>
+
+<script>
+(() => {
+  const IMG = "assets/work/";
+  const FOLDERS = [
+    { id:"social", name:"Social media", years:"2020 – 2026", role:"Content & design",
+      tags:[["Social media management","b"],["Graphic design",""],["Ads","r"]],
+      items:[
+        {img:"social-feed", t:"Wallah Studio Instagram feed", c:"Wallah_Studio · own brand", d:"Feed planning, product photography and post design for my handmade accessories store.", fit:"contain"},
+        {img:"social-grid", t:"Wallah Studio post series", c:"Wallah_Studio · own brand", d:"Product launches and moodboard posts: Wallah comb, red collection, Hom a Hat tea and a colour-collection guide.", wide:true},
+        {img:"wallah-posts", t:"Ring guide & Silver Lining launch", c:"Wallah · jewellery", d:"Educational ring-finger guide and a Silver Lining bracelet launch campaign.", wide:true},
+        {img:"svi-ems-partner", t:"Your global EMS partner for AI infrastructure", c:"SVI Public Company Limited · LinkedIn", d:"Positioning post for SVI's AI data-center electronics, published to 18.5k followers."},
+        {img:"svi-smart-factory", t:"Traceability in Intelligent Manufacturing, Ep. 4", c:"SVI Public Company Limited · LinkedIn", d:"Blog-series cover for SVI's smart factory and test engineering story."},
+        {img:"svi-lifecycle", t:"Managing product lifecycle across regions", c:"SVI Public Company Limited · LinkedIn newsletter", d:"Newsletter edition on keeping electronics consistent across six production sites."},
+        {img:"svi-bms-japan", t:"Battery management systems (Japanese)", c:"SVI Public Company Limited · LinkedIn", d:"Japanese-language post on BMS for the Tohoku market."}
+      ]},
+    { id:"web", name:"Website & banners", years:"2025 – 2026", role:"SEO pages & banners",
+      tags:[["SEO","b"],["Blog",""],["Biotech","r"]],
+      items:[
+        {img:"zubb-amla", t:"Thai Amla: the story of Beta-Glucogallin", c:"ZUBBBiotech · SEO article", d:"Article and banner on Indian gooseberry's antioxidant, written for search and AI answers."},
+        {img:"zubb-liposome", t:"Liposome: deep delivery innovation for skin", c:"ZUBBBiotech · SEO article", d:"Explainer on liposome delivery with a structured table of contents."},
+        {img:"zubb-sericin", t:"Thai silk sericin for premium serums", c:"ZUBBBiotech · SEO article", d:"From silk-weaving heritage to skincare ingredient: article and hero banner."},
+        {url:"https://www.ondemand.in.th/med-journey/", t:"Med Journey: DEK71 medical school exam guide", c:"LEARN Corporation · OnDemand website", d:"SEO pillar page answering what students must sit to get into medical school: TPAT1, A-Level weighting and the TCAS rounds."},
+        {url:"https://www.ondemand.in.th/tutors-2/", t:"OnDemand tutor directory", c:"LEARN Corporation · OnDemand website", d:"Tutor landing page organized by subject so students can find the right teacher from search."}
+      ]},
+    { id:"logo", name:"Logo & packaging", years:"2020 – 2025", role:"Brand identity",
+      tags:[["Branding","b"],["Packaging",""],["Small business","r"]],
+      items:[
+        {img:"packaging", t:"Packaging & signage mockups", c:"herby fresh · 花.co · Wallah", d:"Juice bottle labels, a shop sign, a paper bag sticker and thank-you cards.", wide:true},
+        {img:"logo-herby", t:"herby fresh", c:"Herbal drink", d:"Logo for a cold-pressed herbal drink line.", fit:"contain"},
+        {img:"logo-flower", t:"花.co", c:"Flower shop", d:"Hand-drawn line mark for a flower shop, est. 2025.", fit:"contain"},
+        {img:"logo-wallah-home", t:"Wallah home", c:"Home décor", d:"Playful wordmark for my home décor line.", fit:"contain"},
+        {img:"logo-sawadee", t:"Sawadee", c:"Natural herbal balm", d:"Logo for a natural herbal balm brand.", fit:"contain"},
+        {img:"logo-wallah", t:"wallah'", c:"Jewellery", d:"Minimal wordmark for my jewellery brand.", fit:"contain"},
+        {img:"logo-23", t:"23", c:"Bag shop", d:"Numeral mark for a bag shop.", fit:"contain"},
+        {img:"logo-homahat", t:"Hom a Hat", c:"Tea shop", d:"Organic & aromatic tea shop identity.", fit:"contain"}
+      ]},
+    { id:"poster", name:"Poster & backdrop", years:"2020 – 2026", role:"Event & print design",
+      tags:[["Events","b"],["Print",""],["Exhibition","r"]],
+      items:[
+        {img:"efmd-backdrop", t:"2025 EFMD Social Impact Workshop backdrop", c:"Thammasat Business School · Big C House", d:"Stage backdrop for the workshop on 17 March 2025, Module 2: Business & Community Engagement.", wide:true},
+        {img:"efmd-rollups", t:"Thammasat Model timeline & roll-ups", c:"Thammasat Business School · EFMD 2025", d:"Timeline banner (2006–2023) and four roll-up stands for the same workshop.", wide:true},
+        {img:"svi-exhibition", t:"SVI exhibition panels", c:"SVI Public Company Limited · HKTDC Hong Kong", d:"Global production network, industries served and global sales & support panels.", wide:true},
+        {img:"ibmp-drama", t:"IBMP Drama 2020 posters", c:"IBMP Thammasat · BACC Bangkok", d:"Key visuals and standees for the student drama Fair Game / เพื่อนกัน.", wide:true}
+      ]}
+  ];
+  const ALL_ITEMS = FOLDERS.flatMap(f => f.items.map(i => ({...i, folder:f.id})));
+  const clientsOf = items => new Set(items.map(i => i.c.split(" · ")[0])).size;
+  const TOTAL_CLIENTS = clientsOf(ALL_ITEMS);
+  const $ = s => document.querySelector(s);
+  const esc = s => s.replace(/[&<>"]/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]));
+
+  let current = null, view = [], lbIndex = 0;
+
+  // folders + sidebar links
+  $("#folders").innerHTML = FOLDERS.map(f => {
+    const [a,b] = f.items;
+    return `<button class="pf" type="button" data-f="${f.id}" aria-pressed="false">
+      <div class="fold"><div class="tab"></div><div class="back"></div>
+        <div class="paper"><img src="${IMG}${a.img}.webp" alt="" loading="lazy"></div>
+        <div class="paper"><img src="${IMG}${b.img}.webp" alt="" loading="lazy"></div>
+        <div class="front"><h3>${esc(f.name)}</h3><div class="count">${f.items.length} pieces</div><div class="yr">${f.years}</div></div>
+      </div></button>`;
+  }).join("");
+  $("#navSub").innerHTML = FOLDERS.map(f => `<a href="#work" data-open="${f.id}">${esc(f.name)}</a>`).join("");
+
+  function render(){
+    const q = $("#q").value.trim().toLowerCase();
+    const f = FOLDERS.find(x => x.id === current);
+    let items = f ? f.items.map(i => ({...i, folder:f.id})) : ALL_ITEMS;
+    if (q) items = items.filter(i => (i.t+" "+i.c+" "+i.d).toLowerCase().includes(q));
+    view = items;
+    document.querySelectorAll(".pf").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.f === current)));
+    $("#galleryTitle").textContent = f ? f.name : "All projects";
+    $("#folderPath").textContent = f ? f.name.toUpperCase() : "ALL";
+    $("#galleryCount").textContent = `${items.length} ${items.length === 1 ? "piece" : "pieces"}`;
+    $("#gallery").innerHTML = items.length ? items.map((i,n) => i.url ? `
+      <a class="item link" href="${i.url}" target="_blank" rel="noopener">
+        <div class="thumb"><div class="browser"><div class="bar-top"><i></i><i></i><i></i><span>${esc(i.url.replace("https://",""))}</span></div>
+          <div class="pg"><em>OnDemand</em><b>${esc(i.t)}</b><div class="sk" style="width:90%"></div><div class="sk" style="width:70%"></div><div class="sk" style="width:80%"></div></div></div></div>
+        <div class="meta"><b>${esc(i.t)}</b><span>${esc(i.c)}</span><span class="go">Visit live page ↗</span></div>
+      </a>` : `
+      <button class="item${i.wide ? " wide" : ""}${i.fit === "contain" ? " contain" : ""}" type="button" data-i="${n}">
+        <div class="thumb"><img src="${IMG}${i.img}.webp" alt="${esc(i.t)}" loading="lazy"></div>
+        <div class="meta"><b>${esc(i.t)}</b><span>${esc(i.c)}</span></div>
+      </button>`).join("")
+      : `<div class="empty">No projects match “${esc(q)}”. Try “logo”, “SEO” or “LinkedIn”.</div>`;
+    // inspector
+    const scope = f ? f.items : ALL_ITEMS;
+    const nClients = clientsOf(scope);
+    $("#insCount").textContent = scope.length;
+    $("#insBar").style.width = Math.round(scope.length / ALL_ITEMS.length * 100) + "%";
+    $("#insClients").textContent = nClients;
+    $("#insBar2").style.width = Math.round(nClients / TOTAL_CLIENTS * 100) + "%";
+    $("#pName").textContent = f ? f.name : "All";
+    $("#pYears").textContent = f ? f.years : "2020 – 2026";
+    $("#pRole").textContent = f ? f.role : "Design & marketing";
+    const tags = f ? f.tags : [["Marketing","b"],["Design",""],["SEO","r"]];
+    $("#pTags").innerHTML = tags.map(([t,c]) => `<span class="tag ${c}">${esc(t)}</span>`).join("");
+  }
+
+  function open(id){ current = (current === id ? null : id); render(); }
+  $("#folders").addEventListener("click", e => { const b = e.target.closest(".pf"); if (b) open(b.dataset.f); });
+  document.addEventListener("click", e => {
+    const a = e.target.closest("[data-open]");
+    if (a){ current = a.dataset.open; $("#q").value = ""; render(); closeMenu(); }
+  });
+  $("#showAll").addEventListener("click", () => { current = null; $("#q").value = ""; render(); });
+  $("#q").addEventListener("input", render);
+
+  // lightbox
+  const lb = $("#lb");
+  function show(n){
+    const step = n < lbIndex ? -1 : 1;
+    lbIndex = (n + view.length) % view.length;
+    while (view[lbIndex].url) lbIndex = (lbIndex + step + view.length) % view.length;
+    const i = view[lbIndex];
+    $("#lbImg").src = IMG + i.img + ".webp"; $("#lbImg").alt = i.t;
+    $("#lbCap").innerHTML = `<b>${esc(i.t)}</b>${esc(i.c)}<br>${esc(i.d)}`;
+  }
+  $("#gallery").addEventListener("click", e => {
+    const b = e.target.closest("button.item"); if (!b) return;
+    show(+b.dataset.i); lb.hidden = false; lb.querySelector(".x").focus();
+  });
+  lb.addEventListener("click", e => {
+    const a = e.target.dataset.lb;
+    if (a === "close" || e.target === lb) lb.hidden = true;
+    if (a === "prev") show(lbIndex - 1);
+    if (a === "next") show(lbIndex + 1);
+  });
+  document.addEventListener("keydown", e => {
+    if (lb.hidden) { if (e.key === "Escape") closeMenu(); return; }
+    if (e.key === "Escape") lb.hidden = true;
+    if (e.key === "ArrowLeft") show(lbIndex - 1);
+    if (e.key === "ArrowRight") show(lbIndex + 1);
+  });
+
+  // copy email
+  const toast = msg => { const t = $("#toast"); t.textContent = msg; t.hidden = false; clearTimeout(toast.h); toast.h = setTimeout(() => t.hidden = true, 2200); };
+  document.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", () => {
+    const mail = "panyadeekad@gmail.com";
+    const fallback = () => toast("Email: " + mail);
+    try { navigator.clipboard.writeText(mail).then(() => toast("Email copied"), fallback); } catch { fallback(); }
+  }));
+
+  // mobile menu
+  const side = $("#sidebar"), scrim = $("#scrim"), menuBtn = $("#menuBtn");
+  function closeMenu(){ side.classList.remove("open"); scrim.hidden = true; menuBtn.setAttribute("aria-expanded","false"); }
+  menuBtn.addEventListener("click", () => { side.classList.add("open"); scrim.hidden = false; menuBtn.setAttribute("aria-expanded","true"); });
+  scrim.addEventListener("click", closeMenu);
+  $("#nav").addEventListener("click", e => { if (e.target.closest("a")) closeMenu(); });
+
+  // theme toggle
+  const root = document.documentElement;
+  try { const t = localStorage.getItem("pupae-theme"); if (t) root.dataset.theme = t; } catch {}
+  $("#themeBtn").addEventListener("click", () => {
+    const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    root.dataset.theme = dark ? "light" : "dark";
+    try { localStorage.setItem("pupae-theme", root.dataset.theme); } catch {}
+  });
+
+  // active section in sidebar + breadcrumb
+  const links = [...document.querySelectorAll(".nav > a")];
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      links.forEach(l => l.classList.toggle("on", l.dataset.s === en.target.id));
+      $("#crumb").textContent = en.target.dataset.name;
+    });
+  }, { rootMargin: "-45% 0px -50% 0px" });
+  document.querySelectorAll("section[id]").forEach(s => io.observe(s));
+
+  /* ===== PERFORMANCE DATA =====
+     Fill in the numbers below. Leave a value as null to show "Awaiting data".
+     change = percent vs. the previous period (e.g. 30 for +30%).
+     months = monthly organic clicks, oldest first, e.g. [["Jan",1200],["Feb",1350]]. */
+  const PERFORMANCE = {
+    period: "Data being added",
+    projects: [
+      { id:"ondemand", name:"OnDemand · LEARN Corp.",
+        kpis:[
+          {label:"Organic CTR", value:null, change:30},
+          {label:"Organic clicks", value:null, change:null},
+          {label:"Impressions", value:null, change:null},
+          {label:"Avg. position", value:null, change:null}
+        ],
+        months:[],
+        note:"CTR rose 30%+ within 3 months by rewriting titles, meta descriptions and snippets around student and parent intent." },
+      { id:"zubb", name:"ZUBBBiotech",
+        kpis:[
+          {label:"Organic traffic", value:null, change:33},
+          {label:"Organic clicks", value:null, change:null},
+          {label:"Impressions", value:null, change:null},
+          {label:"Leads / inquiries", value:null, change:null}
+        ],
+        months:[],
+        note:"Organic traffic grew 33% through keyword research, content optimization and structured, expert-led articles." },
+      { id:"svi", name:"SVI",
+        kpis:[
+          {label:"LinkedIn followers", value:"18.5k", change:null},
+          {label:"Organic sessions", value:null, change:null},
+          {label:"Inquiry conversions", value:null, change:null},
+          {label:"Engagement rate", value:null, change:null}
+        ],
+        months:[],
+        note:"Traffic, rankings and inquiry conversions from GA4 and Search Console, reported monthly to management." }
+    ]
+  };
+
+  let perfCur = PERFORMANCE.projects[0].id;
+  function chartSVG(months){
+    const W = 640, H = 220, L = 44, R = 12, T = 12, B = 26;
+    const max = Math.max(...months.map(m => m[1])) || 1;
+    const nice = Math.pow(10, Math.floor(Math.log10(max)));
+    const top = Math.ceil(max / nice) * nice;
+    const x = i => L + (months.length === 1 ? 0 : i * (W - L - R) / (months.length - 1));
+    const y = v => T + (1 - v / top) * (H - T - B);
+    const pts = months.map((m,i) => `${x(i).toFixed(1)},${y(m[1]).toFixed(1)}`);
+    const grid = [0, .5, 1].map(f => `<line x1="${L}" x2="${W-R}" y1="${y(top*f)}" y2="${y(top*f)}" stroke="var(--line)"/><text x="${L-8}" y="${y(top*f)+4}" text-anchor="end">${Math.round(top*f).toLocaleString()}</text>`).join("");
+    const labels = months.map((m,i) => `<text x="${x(i)}" y="${H-6}" text-anchor="middle">${esc(m[0])}</text>`).join("");
+    const last = months.length - 1;
+    return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Monthly organic clicks">${grid}
+      <polygon points="${L},${y(0)} ${pts.join(" ")} ${x(last)},${y(0)}" fill="var(--folder)" fill-opacity=".14"/>
+      <polyline points="${pts.join(" ")}" fill="none" stroke="var(--folder-2)" stroke-width="2.5" stroke-linejoin="round"/>
+      <circle cx="${x(last)}" cy="${y(months[last][1])}" r="4.5" fill="var(--folder-2)"/>${labels}</svg>`;
+  }
+  function renderPerf(){
+    const pr = PERFORMANCE.projects.find(p => p.id === perfCur);
+    $("#perfPeriod").textContent = PERFORMANCE.period;
+    $("#perfTabs").innerHTML = PERFORMANCE.projects.map(p => `<button type="button" role="tab" data-p="${p.id}" aria-selected="${p.id === perfCur}">${esc(p.name)}</button>`).join("");
+    $("#perfKpis").innerHTML = pr.kpis.map(k => {
+      const has = k.value !== null && k.value !== undefined;
+      const ch = k.change === null || k.change === undefined ? "" :
+        `<span class="dl${k.change < 0 ? " neg" : ""}">${k.change > 0 ? "+" : ""}${k.change}%</span>`;
+      const hasCh = k.change !== null && k.change !== undefined;
+      if (!has && hasCh) return `<div class="kpi"><small>${esc(k.label)}</small><strong>${k.change > 0 ? "+" : ""}${k.change}%</strong><span class="dl${k.change < 0 ? " neg" : ""}">growth</span></div>`;
+      return `<div class="kpi${has ? "" : " wait"}"><small>${esc(k.label)}</small><strong>${has ? esc(String(k.value)) : "—"}</strong>${has ? ch : '<span class="dl">Awaiting data</span>'}</div>`;
+    }).join("");
+    $("#perfChart").innerHTML = pr.months.length > 1 ? chartSVG(pr.months)
+      : `<div class="chart-empty">Monthly results for ${esc(pr.name)} will appear here.</div>`;
+    $("#perfNote").innerHTML = `<b>${esc(pr.name)}:</b> ${esc(pr.note)}`;
+  }
+  $("#perfTabs").addEventListener("click", e => { const b = e.target.closest("[data-p]"); if (b){ perfCur = b.dataset.p; renderPerf(); } });
+  renderPerf();
+
+  render();
+})();
+</script>
+</body>
+</html>
