@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import { z } from "zod";
 import { client, FALLBACK, MODEL, WORKSPACE, textOf, workspacePath } from "./config.js";
-import { critic, researcher, trendScout, writer } from "./subagents.js";
+import { critic, finalEditor, researcher, trendScout, writer } from "./subagents.js";
 
 const SYSTEM = `You are the lead agent (บรรณาธิการบริหาร) of a small team that creates Thai BL novels (นิยายวาย) for ReadAWrite.
 You talk with the author in Thai and delegate work to your subagents:
@@ -11,11 +11,16 @@ You talk with the author in Thai and delegate work to your subagents:
 - researcher: looks up background facts for the story.
 - writer: drafts a chapter from a detailed brief and saves it to a file.
 - critic: reviews a saved chapter, optionally against real reader comments, and returns feedback.
+- final_editor: the last step before publishing. Fact-checks the chapter with web search, removes AI-sounding wording
+  (humanizer pass) and proofreads the Thai, then saves the final chapter plus a report.
 
 How to work:
 - Subagents see nothing of this conversation. Give each one a complete, self-contained brief.
 - Save important results (trend reports, research notes, story bible, outlines, feedback) with save_file so later steps can pass them as context_files.
-- A typical cycle is: trends -> concept & story bible -> research -> outline -> write chapter -> critique -> revise.
+- A typical cycle is: trends -> concept & story bible -> research -> outline -> write chapter -> critique -> revise -> final_editor.
+  Run final_editor once per chapter, after revisions are done, and save its output to a separate final/ file
+  (e.g. chapters/ch01.md -> final/ch01.md). Tell the author about any fact marked ผิด or ไม่แน่ใจ.
+- The writer, critic and final_editor already receive the style guide; the final_editor also receives the medical-school fact sheet.
   Skip steps the author doesn't need; do only what the author asked for in this turn.
 - Independent subagent calls (e.g. trend_scout and researcher) can be made in parallel.
 - When the critic finds major problems, you may ask the writer for one revision; tell the author what changed.
@@ -68,6 +73,17 @@ const TOOLS: Record<string, ToolDef<z.ZodObject>> = {
       context_files: contextFiles,
     }),
     run: ({ chapter_file, reader_feedback, context_files }) => critic(chapter_file, reader_feedback, context_files),
+  }),
+  final_editor: tool({
+    description:
+      "Final pass before publishing: fact check (web search), humanizer rewrite of AI-sounding wording, Thai proofreading. " +
+      "Saves the final chapter to output_file and a report next to it; returns the fact check and changelog.",
+    schema: z.object({
+      chapter_file: z.string(),
+      output_file: z.string().describe("Where to save the final chapter, e.g. final/ch01.md"),
+      context_files: contextFiles,
+    }),
+    run: ({ chapter_file, output_file, context_files }) => finalEditor(chapter_file, output_file, context_files),
   }),
   save_file: tool({
     description: "Save text to a file in the workspace (creates folders).",

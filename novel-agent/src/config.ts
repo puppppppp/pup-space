@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 
 export const client = new Anthropic();
 
@@ -23,6 +24,15 @@ export function workspacePath(relative: string): string {
     throw new Error(`Path escapes workspace: ${relative}`);
   }
   return full;
+}
+
+// Reference notes checked into the repo (style guide, research sheets).
+const KNOWLEDGE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../knowledge");
+
+export function knowledge(file: string): string {
+  const full = path.join(KNOWLEDGE, file);
+  if (!fs.existsSync(full)) return "";
+  return `<reference name="${file}">\n${fs.readFileSync(full, "utf8")}\n</reference>`;
 }
 
 export function textOf(message: Anthropic.Beta.BetaMessage): string {
