@@ -29,7 +29,7 @@ Output only the chapter itself in Markdown, starting with the chapter title as a
 const CRITIC_SYSTEM = `You are a sharp but constructive editor for Thai BL web novels on ReadAWrite.
 Review the chapter you are given and, if provided, real reader comments.
 Report in Thai with these sections:
-1. คะแนนรวม (1-10) และสรุปสั้น
+1. คะแนนรวม เขียนในรูปแบบ "X/10" และสรุปสั้น
 2. จุดแข็ง
 3. จุดที่ต้องแก้ (เรียงตามความสำคัญ อ้างประโยค/ฉากที่เจาะจง)
 4. ฮุก/จังหวะ/ความสม่ำเสมอของตัวละคร

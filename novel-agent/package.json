@@ -4,6 +4,7 @@
   "description": "Multi-agent bot for researching, writing and reviewing Thai BL novels (Claude API)",
   "scripts": {
     "start": "tsx src/index.ts",
+    "auto": "tsx src/auto.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
