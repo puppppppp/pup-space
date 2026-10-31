@@ -6,7 +6,8 @@
     "start": "tsx src/index.ts",
     "auto": "tsx src/auto.ts",
     "line": "tsx src/line.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "local": "tsx src/local.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.3.0",

@@ -73,6 +73,25 @@ npm run auto -- ชื่อโปรเจกต์
 6. แอดบอทเป็นเพื่อนแล้วทักไป 1 ครั้ง บอทจะตอบ **User ID** ของคุณกลับมา ให้ใส่ไว้ใน `LINE_ALLOWED_USER_IDS` แล้วรันใหม่
    (คนที่ไม่อยู่ในรายชื่อนี้ใช้บอทไม่ได้ จะได้ไม่มีใครมาใช้เครดิต API ของคุณ)
 
+### รันบน Mac ของคุณเอง (ฟรี ไม่ต้องเช่าเซิร์ฟเวอร์)
+
+บอทจะใช้ได้เฉพาะตอนที่ Mac เปิดอยู่และหน้าต่าง Terminal ยังไม่ปิด งานทั้งหมดเก็บใน `novel-agent/workspace/` บนเครื่อง
+
+1. ติดตั้งเครื่องมือ (ครั้งเดียว) ใน Terminal:
+   ```bash
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"   # ถ้ายังไม่มี Homebrew
+   brew install node@22 cloudflared git
+   git clone -b claude/eloquent-volta-kx5ro9 https://github.com/puppppppp/svi-digital-visitor-hub.git ~/Documents/novel-bot
+   cd ~/Documents/novel-bot/novel-agent && npm install && cp .env.example .env && open -e .env
+   ```
+2. ใน `.env` ที่เปิดขึ้นมา ใส่ `ANTHROPIC_API_KEY`, `LINE_CHANNEL_SECRET`, `LINE_CHANNEL_ACCESS_TOKEN` แล้วบันทึก (ไม่ต้องใส่ `PUBLIC_URL`)
+3. รันบอท:
+   ```bash
+   cd ~/Documents/novel-bot/novel-agent && caffeinate -i npm run local
+   ```
+   สคริปต์จะเปิด Cloudflare Tunnel ฟรี (ไม่ต้องสมัคร) แล้ว**ตั้ง Webhook URL ใน LINE ให้เอง**ทุกครั้งที่รัน `caffeinate -i` กัน Mac หลับระหว่างบอทเขียน
+4. ใน LINE Developers Console เปิด **Use webhook** (ครั้งเดียว) แล้วทักบอท บอทจะตอบ User ID กลับมา → ใส่ใน `LINE_ALLOWED_USER_IDS` ใน `.env` → กด Ctrl+C แล้วรันข้อ 3 ใหม่
+
 ### Deploy บน Render
 
 repo มีไฟล์ `render.yaml` ไว้ที่ root แล้ว ตั้งค่าเว็บเซอร์วิสพร้อม persistent disk ให้เรียบร้อย
