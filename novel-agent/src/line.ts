@@ -7,7 +7,9 @@ import fs from "fs";
 import { workspacePath } from "./config.js";
 import { NovelProject } from "./pipeline.js";
 
-const { LINE_CHANNEL_SECRET, LINE_CHANNEL_ACCESS_TOKEN, PUBLIC_URL } = process.env;
+const { LINE_CHANNEL_SECRET, LINE_CHANNEL_ACCESS_TOKEN } = process.env;
+// Render sets RENDER_EXTERNAL_URL automatically, so PUBLIC_URL is only needed elsewhere (e.g. ngrok).
+const PUBLIC_URL = process.env.PUBLIC_URL ?? process.env.RENDER_EXTERNAL_URL;
 if (!LINE_CHANNEL_SECRET || !LINE_CHANNEL_ACCESS_TOKEN || !PUBLIC_URL) {
   throw new Error("Set LINE_CHANNEL_SECRET, LINE_CHANNEL_ACCESS_TOKEN and PUBLIC_URL in .env");
 }
@@ -172,6 +174,8 @@ async function handleText(userId: string, replyToken: string, text: string) {
 }
 
 const app = express();
+
+app.get("/healthz", (_req, res) => res.send("ok"));
 
 app.post("/webhook", middleware({ channelSecret: LINE_CHANNEL_SECRET }), (req, res) => {
   res.sendStatus(200);

@@ -1,0 +1,33 @@
+# Render Blueprint for the novel-agent LINE bot (novel-agent/src/line.ts).
+# Render dashboard -> New -> Blueprint -> pick this repo. See novel-agent/README.md ("Deploy บน Render").
+services:
+  - type: web
+    name: novel-line-bot
+    runtime: node
+    rootDir: novel-agent
+    # A persistent disk needs a paid instance; the free plan sleeps and loses workspace/ on every restart.
+    plan: starter
+    region: singapore
+    branch: claude/eloquent-volta-kx5ro9
+    buildCommand: npm ci
+    startCommand: npm run line
+    healthCheckPath: /healthz
+    disk:
+      name: novel-workspace
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NOVEL_WORKSPACE
+        value: /var/data/workspace
+      # Secrets: Render asks for these values when the Blueprint is created.
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: LINE_CHANNEL_SECRET
+        sync: false
+      - key: LINE_CHANNEL_ACCESS_TOKEN
+        sync: false
+      - key: LINE_ALLOWED_USER_IDS
+        sync: false
+      # PUBLIC_URL is not needed: the bot uses Render's RENDER_EXTERNAL_URL.

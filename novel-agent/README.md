@@ -73,6 +73,22 @@ npm run auto -- ชื่อโปรเจกต์
 6. แอดบอทเป็นเพื่อนแล้วทักไป 1 ครั้ง บอทจะตอบ **User ID** ของคุณกลับมา ให้ใส่ไว้ใน `LINE_ALLOWED_USER_IDS` แล้วรันใหม่
    (คนที่ไม่อยู่ในรายชื่อนี้ใช้บอทไม่ได้ จะได้ไม่มีใครมาใช้เครดิต API ของคุณ)
 
+### Deploy บน Render
+
+repo มีไฟล์ `render.yaml` ไว้ที่ root แล้ว ตั้งค่าเว็บเซอร์วิสพร้อม persistent disk ให้เรียบร้อย
+
+1. เข้า [dashboard.render.com](https://dashboard.render.com) → **New** → **Blueprint** → เชื่อม GitHub แล้วเลือก repo นี้
+2. Render จะถามค่า secret ทีละตัว:
+   - `ANTHROPIC_API_KEY`: API key จาก platform.claude.com
+   - `LINE_CHANNEL_SECRET`: จาก LINE Developers Console แท็บ Basic settings
+   - `LINE_CHANNEL_ACCESS_TOKEN`: จากแท็บ Messaging API
+   - `LINE_ALLOWED_USER_IDS`: ตอนแรกยังไม่รู้ ใส่ `-` ไว้ก่อน
+3. กด **Apply** แล้วรอ deploy เสร็จ จะได้ URL แบบ `https://novel-line-bot.onrender.com`
+4. ใน LINE Developers Console ตั้ง **Webhook URL** เป็น `https://novel-line-bot.onrender.com/webhook` → **Verify** → เปิด **Use webhook**
+5. ทักบอทใน LINE บอทจะตอบ User ID กลับมา → ใน Render ไปที่ service → **Environment** → แก้ `LINE_ALLOWED_USER_IDS` เป็น ID นั้น → Save (Render จะ deploy ใหม่ให้เอง)
+
+แพ็กเกจ `starter` เสียเงินรายเดือน แต่จำเป็น เพราะแพ็กเกจฟรีจะหลับเมื่อไม่มีคนใช้และไม่มี disk งานทั้งหมดจะหาย งานเก็บไว้ที่ `/var/data/workspace` บน disk ของ Render ไม่ต้องตั้ง `PUBLIC_URL` เพราะบอทใช้ URL ที่ Render ให้มาเอง
+
 ลิงก์อ่านตอนมีรหัสสุ่มประจำโปรเจกต์อยู่ใน URL คนที่ไม่มีลิงก์จะเปิดไม่ได้ แต่ใครที่ได้ลิงก์ไปก็เปิดอ่านได้ อย่าแชร์ลิงก์ต่อถ้ายังไม่อยากเผยแพร่
 
 ## ตัวอย่างคำสั่ง (โหมดแชท `npm start`)
