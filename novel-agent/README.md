@@ -11,7 +11,7 @@
            └── final_editor ด่านสุดท้ายก่อนลงเว็บ: fact check (ค้นเว็บ) → humanizer ลบสำนวน AI → พิสูจน์อักษร
 ```
 
-`final_editor` เซฟตอนที่แก้แล้วไว้ใน `final/` พร้อมไฟล์ `.report.md` ที่บอกว่าข้อเท็จจริงไหนผิดหรือไม่แน่ใจ และแก้สำนวนอะไรไปบ้าง ส่วน writer, critic และ final_editor จะอ่าน `knowledge/style-guide.md` ทุกครั้ง และ final_editor ใช้ `knowledge/med-school-th.md` ในการเช็กข้อมูลด้วย
+`final_editor` เซฟตอนที่แก้แล้วไว้ใน `final/` พร้อมไฟล์ `.report.md` ที่บอกว่าข้อเท็จจริงไหนผิดหรือไม่แน่ใจ และแก้สำนวนอะไรไปบ้าง ส่วน writer, critic และ final_editor จะอ่าน `knowledge/style-guide.md` ทุกครั้ง และ final_editor ใช้ `knowledge/med-school-th.md` ในการเช็กข้อมูลด้วย ส่วน `knowledge/market-research.md` เป็นข้อมูลตลาดและบทวิเคราะห์นิยายอ้างอิงไว้ให้คนอ่าน บอทไม่ได้โหลดไฟล์นี้
 
 Lead agent จะคุยกับคุณ แล้วแบ่งงานให้ subagent แต่ละตัว ทุกไฟล์ (รายงานเทรนด์, story bible, โครงเรื่อง, ตอนต่าง ๆ, ฟีดแบค) จะถูกเก็บไว้ในโฟลเดอร์ `workspace/`
 
