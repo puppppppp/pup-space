@@ -1,0 +1,134 @@
+# Novel Agent: ทีมบอทช่วยเขียนนิยายวาย
+
+บอทแบบ multi-agent (ใช้ Claude API) ที่ช่วยศึกษาตลาด ค้นข้อมูล เขียนนิยายวาย และเช็คฟีดแบคสำหรับลง ReadAWrite
+
+```
+คุณ ──► Lead agent (บรรณาธิการบริหาร)
+           ├── trend_scout  ศึกษานิยายวายขายดีใน ReadAWrite (ค้นเว็บเองได้)
+           ├── researcher   หาข้อมูลประกอบเรื่อง เช่น อาชีพ สถานที่ (ค้นเว็บเองได้)
+           ├── writer       เขียน/แก้ตอนจาก brief แล้วเซฟเป็นไฟล์
+           ├── critic       ตรวจตอนที่เขียน + วิเคราะห์คอมเมนต์คนอ่าน
+           └── final_editor ด่านสุดท้ายก่อนลงเว็บ: fact check (ค้นเว็บ) → humanizer ลบสำนวน AI → พิสูจน์อักษร
+```
+
+`final_editor` เซฟตอนที่แก้แล้วไว้ใน `final/` พร้อมไฟล์ `.report.md` ที่บอกว่าข้อเท็จจริงไหนผิดหรือไม่แน่ใจ และแก้สำนวนอะไรไปบ้าง ส่วน writer, critic และ final_editor จะอ่าน `knowledge/style-guide.md` ทุกครั้ง และ final_editor ใช้ `knowledge/med-school-th.md` ในการเช็กข้อมูลด้วย ส่วน `knowledge/market-research.md` เป็นข้อมูลตลาดและบทวิเคราะห์นิยายอ้างอิงไว้ให้คนอ่าน บอทไม่ได้โหลดไฟล์นี้
+
+Lead agent จะคุยกับคุณ แล้วแบ่งงานให้ subagent แต่ละตัว ทุกไฟล์ (รายงานเทรนด์, story bible, โครงเรื่อง, ตอนต่าง ๆ, ฟีดแบค) จะถูกเก็บไว้ในโฟลเดอร์ `workspace/`
+
+## ติดตั้งและรัน
+
+```bash
+cd novel-agent
+npm install
+cp .env.example .env      # แล้วใส่ ANTHROPIC_API_KEY
+npm start
+```
+
+## โหมดอัตโนมัติ (ป้อนแค่คีย์เวิร์ด)
+
+```bash
+npm run auto -- ชื่อโปรเจกต์
+```
+
+1. พิมพ์คีย์เวิร์ดพล็อต เช่น `วาย มหาลัย นศ.แพทย์ คู่แข่ง ฟีลกู๊ด`
+2. บอทค้นเทรนด์ ReadAWrite กับข้อมูลพื้นหลังพร้อมกัน แล้ววางโครงเรื่อง (ชื่อเรื่อง คำโปรย แท็ก ตัวละคร และโครงเรื่อง 20–30 ตอน)
+3. **รอคุณอนุมัติโครงเรื่อง:** พิมพ์ `a` เพื่ออนุมัติ หรือพิมพ์สิ่งที่อยากแก้ บอทจะวางใหม่ให้
+4. ทุกตอนวนแบบนี้: writer → critic (ถ้าได้ต่ำกว่า 8/10 จะแก้ให้ 1 รอบ) → final_editor (fact check + humanizer + พิสูจน์อักษร)
+5. **รอคุณอนุมัติทีละตอน:** เปิดอ่าน `workspace/ชื่อโปรเจกต์/final/chNN.md` แล้วตอบ
+   - `a` = อนุมัติ แล้วเขียนตอนต่อไปเลย
+   - พิมพ์สิ่งที่อยากแก้ = เขียนตอนนั้นใหม่ตามที่บอก แล้วถามใหม่
+   - `q` = พักไว้ก่อน รันคำสั่งเดิมอีกครั้งเมื่อไหร่ก็จะทำต่อจากตอนที่ค้างอยู่
+
+บอทสรุปเรื่องย่อของทุกตอนที่อนุมัติแล้ว ส่งต่อให้ตอนถัดไป เนื้อเรื่องจะได้ต่อเนื่องกัน ส่วนสถานะงานทั้งหมดเก็บไว้ใน `workspace/ชื่อโปรเจกต์/project.json`
+
+## สั่งงานและอนุมัติผ่าน LINE
+
+ทำงานแบบเดียวกับโหมดอัตโนมัติ แต่คุยผ่าน LINE ทั้งหมด
+
+| คุณส่งใน LINE | บอททำอะไร |
+|---|---|
+| คีย์เวิร์ดพล็อต (ครั้งแรก) | ค้นเทรนด์ → วางโครงเรื่อง → ส่งชื่อเรื่อง คำโปรย ตัวละคร และลิงก์อ่านโครงเรื่องเต็ม |
+| `อนุมัติ` | อนุมัติโครงเรื่องหรือตอนล่าสุด แล้วเขียนตอนต่อไปทันที |
+| ข้อความอื่น ๆ | ถือเป็นคำขอแก้ เขียนโครงเรื่องหรือตอนนั้นใหม่แล้วส่งให้ดูอีกรอบ |
+| `อ่านในแชท` | ส่งเนื้อหาตอนนั้นทั้งตอนมาในแชท |
+| `พักไว้ก่อน` | หยุดไว้ก่อน กลับมาส่ง `อนุมัติ` หรือคำแก้เมื่อไหร่ก็ได้ |
+| `สถานะ` | ส่งสิ่งที่รอคุณอนุมัติอยู่มาให้ดูอีกครั้ง |
+| `ใหม่ <คีย์เวิร์ด>` | เริ่มเรื่องใหม่ (เรื่องเดิมถูกเก็บไว้ ไม่ลบ) |
+
+ทุกตอนบอทจะส่ง: คะแนนจาก critic, ลิงก์อ่านตอนนั้น (หน้าเว็บอ่านง่ายบนมือถือ), ลิงก์รายงาน fact check และสรุปสิ่งที่ final_editor แก้ไป พร้อมปุ่มกด "อนุมัติ"
+ระหว่างทำงานจะแจ้งความคืบหน้าเป็นระยะ ถ้าพิมพ์มาระหว่างที่บอทกำลังทำงาน บอทจะตอบว่ายังทำอยู่
+
+### ตั้งค่า (ทำครั้งเดียว)
+
+1. **สร้าง LINE Official Account + Messaging API channel** ที่ [LINE Developers Console](https://developers.line.biz/console/)
+   - หน้า Basic settings: คัดลอก **Channel secret**
+   - หน้า Messaging API: กด Issue **Channel access token (long-lived)**
+   - ปิด **Auto-reply messages** กับ **Greeting messages** ใน LINE Official Account Manager
+2. **เปิดเซิร์ฟเวอร์ให้เข้าจากอินเทอร์เน็ตได้** (LINE ต้องส่ง webhook มาหาได้)
+   - ทดลองบนคอมตัวเอง: `ngrok http 3000` แล้วเอา URL `https://....ngrok-free.app` ที่ได้มาใช้
+   - ใช้งานจริง: deploy ไป Render, Railway หรือ VPS **ต้องมี persistent disk** สำหรับโฟลเดอร์ `workspace/` ไม่อย่างนั้นงานจะหายเวลาเซิร์ฟเวอร์รีสตาร์ต
+3. ใส่ค่าใน `.env`: `LINE_CHANNEL_SECRET`, `LINE_CHANNEL_ACCESS_TOKEN`, `PUBLIC_URL` (URL จากข้อ 2) และ `ANTHROPIC_API_KEY`
+4. รัน `npm run line`
+5. ในหน้า Messaging API ตั้ง **Webhook URL** เป็น `PUBLIC_URL/webhook` แล้วกด Verify และเปิด **Use webhook**
+6. แอดบอทเป็นเพื่อนแล้วทักไป 1 ครั้ง บอทจะตอบ **User ID** ของคุณกลับมา ให้ใส่ไว้ใน `LINE_ALLOWED_USER_IDS` แล้วรันใหม่
+   (คนที่ไม่อยู่ในรายชื่อนี้ใช้บอทไม่ได้ จะได้ไม่มีใครมาใช้เครดิต API ของคุณ)
+
+### รันบน Mac ของคุณเอง (ฟรี ไม่ต้องเช่าเซิร์ฟเวอร์)
+
+บอทจะใช้ได้เฉพาะตอนที่ Mac เปิดอยู่และหน้าต่าง Terminal ยังไม่ปิด งานทั้งหมดเก็บใน `novel-agent/workspace/` บนเครื่อง
+
+1. ติดตั้งเครื่องมือ (ครั้งเดียว) ใน Terminal:
+   ```bash
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"   # ถ้ายังไม่มี Homebrew
+   brew install node@22 cloudflared git
+   git clone -b claude/eloquent-volta-kx5ro9 https://github.com/puppppppp/svi-digital-visitor-hub.git ~/Documents/novel-bot
+   cd ~/Documents/novel-bot/novel-agent && npm install && cp .env.example .env && open -e .env
+   ```
+2. ใน `.env` ที่เปิดขึ้นมา ใส่ `ANTHROPIC_API_KEY`, `LINE_CHANNEL_SECRET`, `LINE_CHANNEL_ACCESS_TOKEN` แล้วบันทึก (ไม่ต้องใส่ `PUBLIC_URL`)
+3. รันบอท:
+   ```bash
+   cd ~/Documents/novel-bot/novel-agent && caffeinate -i npm run local
+   ```
+   สคริปต์จะเปิด Cloudflare Tunnel ฟรี (ไม่ต้องสมัคร) แล้ว**ตั้ง Webhook URL ใน LINE ให้เอง**ทุกครั้งที่รัน `caffeinate -i` กัน Mac หลับระหว่างบอทเขียน
+4. ใน LINE Developers Console เปิด **Use webhook** (ครั้งเดียว) แล้วทักบอท บอทจะตอบ User ID กลับมา → ใส่ใน `LINE_ALLOWED_USER_IDS` ใน `.env` → กด Ctrl+C แล้วรันข้อ 3 ใหม่
+
+### Deploy บน Render
+
+repo มีไฟล์ `render.yaml` ไว้ที่ root แล้ว ตั้งค่าเว็บเซอร์วิสพร้อม persistent disk ให้เรียบร้อย
+
+1. เข้า [dashboard.render.com](https://dashboard.render.com) → **New** → **Blueprint** → เชื่อม GitHub แล้วเลือก repo นี้
+2. Render จะถามค่า secret ทีละตัว:
+   - `ANTHROPIC_API_KEY`: API key จาก platform.claude.com
+   - `LINE_CHANNEL_SECRET`: จาก LINE Developers Console แท็บ Basic settings
+   - `LINE_CHANNEL_ACCESS_TOKEN`: จากแท็บ Messaging API
+   - `LINE_ALLOWED_USER_IDS`: ตอนแรกยังไม่รู้ ใส่ `-` ไว้ก่อน
+3. กด **Apply** แล้วรอ deploy เสร็จ จะได้ URL แบบ `https://novel-line-bot.onrender.com`
+4. ใน LINE Developers Console ตั้ง **Webhook URL** เป็น `https://novel-line-bot.onrender.com/webhook` → **Verify** → เปิด **Use webhook**
+5. ทักบอทใน LINE บอทจะตอบ User ID กลับมา → ใน Render ไปที่ service → **Environment** → แก้ `LINE_ALLOWED_USER_IDS` เป็น ID นั้น → Save (Render จะ deploy ใหม่ให้เอง)
+
+แพ็กเกจ `starter` เสียเงินรายเดือน แต่จำเป็น เพราะแพ็กเกจฟรีจะหลับเมื่อไม่มีคนใช้และไม่มี disk งานทั้งหมดจะหาย งานเก็บไว้ที่ `/var/data/workspace` บน disk ของ Render ไม่ต้องตั้ง `PUBLIC_URL` เพราะบอทใช้ URL ที่ Render ให้มาเอง
+
+ลิงก์อ่านตอนมีรหัสสุ่มประจำโปรเจกต์อยู่ใน URL คนที่ไม่มีลิงก์จะเปิดไม่ได้ แต่ใครที่ได้ลิงก์ไปก็เปิดอ่านได้ อย่าแชร์ลิงก์ต่อถ้ายังไม่อยากเผยแพร่
+
+## ตัวอย่างคำสั่ง (โหมดแชท `npm start`)
+
+- `ศึกษานิยายวายขายดีใน ReadAWrite ช่วงนี้ สรุปพล็อต แท็ก ราคา และสิ่งที่คนอ่านชอบ`
+- `จากรายงานเทรนด์ เสนอพล็อตใหม่ 3 แบบ แนวมหาลัย enemies to lovers`
+- `เลือกพล็อตที่ 2 ทำ story bible กับโครงเรื่อง 20 ตอน แล้วหาข้อมูลชีวิตนักศึกษาแพทย์ด้วย`
+- `เขียนตอนที่ 1 ยาวประมาณ 3,000 คำ แล้วให้ critic ตรวจ`
+- `ตอนที่ 1 แก้เสร็จแล้ว ส่ง final_editor ตรวจรอบสุดท้ายก่อนลงเว็บ`
+- `นี่คือคอมเมนต์คนอ่านตอนที่ 1: ... ช่วยสรุปและแนะนำว่าตอนต่อไปควรปรับอะไร`
+
+## ปรับแต่ง
+
+- เปลี่ยนโมเดล: ตั้ง `NOVEL_AGENT_MODEL` ใน `.env` (ค่าเริ่มต้น `claude-opus-5-5`)
+- เปลี่ยนที่เก็บไฟล์: ตั้ง `NOVEL_WORKSPACE`
+- แก้นิสัย/คำสั่งของแต่ละ agent: `src/subagents.ts` (subagent) และ `src/orchestrator.ts` (lead agent)
+- เพิ่ม subagent ใหม่: เขียนฟังก์ชันใน `src/subagents.ts` แล้วเพิ่มเป็น tool ใน `TOOLS` ของ `src/orchestrator.ts`
+
+## หมายเหตุ
+
+- trend_scout สรุปแพทเทิร์นจากข้อมูลสาธารณะ ไม่คัดลอกเนื้อหานิยายของคนอื่น และ writer ถูกสั่งให้เขียนงานต้นฉบับเท่านั้น
+- ระดับเนื้อหา: ถ้าไม่ระบุ rating ใน brief ฉากโรแมนซ์จะเป็นแบบไม่โจ่งแจ้ง (fade to black)
+- ทุกคำขอเปิด refusal fallback ไว้ (`fallbacks: "default"`) ถ้าโมเดลหลักปฏิเสธคำขอ API จะส่งต่อให้โมเดลสำรองเอง
+- ค่าใช้จ่าย: การค้นเว็บและการเขียนตอนยาว ๆ ใช้ token เยอะ ลดได้โดยเปลี่ยน `effort` ใน `src/subagents.ts` หรือใช้โมเดลที่ถูกกว่าผ่าน `NOVEL_AGENT_MODEL`
